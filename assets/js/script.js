@@ -119,9 +119,9 @@ $(document).ready(function() {
 			contentType: "application/json",
 			dataType: "json",
 			headers: {
-				// "Access-Control-Allow-Origin": "*",
-				// "Access-Control-Allow-Methods":"GET",
-				// "Access-Control-Allow-Headers":"Authorization",
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Methods":"GET",
+				"Access-Control-Allow-Headers":"Authorization",
 
 				"Authorization": "Bearer " + accessToken,
 			},
