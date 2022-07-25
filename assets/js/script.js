@@ -24,7 +24,7 @@ $(document).ready(function() {
 										'<div class="bounce2"></div>'+
 										'<div class="bounce3"></div>'+
 									'</div>'+
-									'<input type="text" id="chat-input" autocomplete="off" placeholder="Try typing here"'+ 'class="form-control bot-txt"/>'+
+									'<input type="text" id="chat-input" autocomplete="off" placeholder="Digite aqui ..."'+ 'class="form-control bot-txt"/>'+
 								'</div>'+
 							'</div><!--chatCont end-->'+
 
@@ -35,7 +35,7 @@ $(document).ready(function() {
 									'</div><!--col-hgt end-->'+
 									'<div class="col-hgt">'+
 										'<div class="chat-txt">'+
-											'Chat with us now!'+
+											'Chat do Carlos'+
 										'</div>'+
 									'</div><!--col-hgt end-->'+
 								'</div><!--row end-->'+
@@ -142,6 +142,13 @@ $(document).ready(function() {
 	//------------------------------------------- Main function ------------------------------------------------
 	function main(data) {
 	
+
+		if( data.resposta >= 0)
+			c_resposta  = data.resposta;
+		if(data.nivel >= 0)
+			c_nivelresposta = data.nivel;
+		
+		
 		for(i in data.messages)
 		{
 			setBotResponse(data.messages[i]);
@@ -149,11 +156,26 @@ $(document).ready(function() {
 		if(data.options &&  data.options.length > 0 ) { // check if quick replies are there in api.ai
 			addSuggestion(data.options);
 		}
+
+
+		if(data.jsonObj)
+		{
+			addJsonResult(data.jsonObj)
+		}
+
+		if(data.reset)
+		{
+			setTimeout(function(){
+				send(c_resposta,c_nivelresposta,"olá");
+			}, 900);
+		}
 	}
 
 
 	//------------------------------------ Set bot response in result_div -------------------------------------
 	function setBotResponse(val) {
+
+
 		setTimeout(function(){
 			if($.trim(val) == '') {
 				val = 'I couldn\'t get that. Let\' try something else!'
@@ -198,26 +220,50 @@ $(document).ready(function() {
 
 
 	//------------------------------------------- Suggestions --------------------------------------------------
-	function addSuggestion(textToAdd) {
+	function addSuggestion(options) {
 		setTimeout(function() {
-			var suggestions = textToAdd.replies;
-			var suggLength = textToAdd.replies.length;
 			$('<p class="suggestion"></p>').appendTo('#result_div');
-			$('<div class="sugg-title">Suggestions: </div>').appendTo('.suggestion');
-			// Loop through suggestions
-			for(i=0;i<suggLength;i++) {
-				$('<span class="sugg-options">'+suggestions[i]+'</span>').appendTo('.suggestion');
+			$('<div class="sugg-title">Opções: </div>').appendTo('.suggestion');
+			// Loop through options
+			for(i=0;i<options.length;i++) {
+				$('<span data-resposta="'+options[i].respostaBot+'" data-nivel="'+options[i].nivel+'" class="sugg-options">'+options[i].option+' - ' +  options[i].title + '</span>').appendTo('.suggestion');
 			}
 			scrollToBottomOfResults();
 		}, 1000);
 	}
 
-	// on click of suggestions get value and send to API.AI
+	
+
+	// on click of options get value and send to API
 	$(document).on("click", ".suggestion span", function() {
 		var text = this.innerText;
 		setUserResponse(text);
-		send(text);
+
+		c_resposta  = $(this).attr("data-resposta");
+		c_nivelresposta  = $(this).attr("data-nivel");
+		send(c_resposta,c_nivelresposta,text);
 		$('.suggestion').remove();
 	});
 	// Suggestions end -----------------------------------------------------------------------------------------
+
+
+//------------------------------------------- Suggestions --------------------------------------------------
+function addJsonResult(jsonObj) {
+	setTimeout(function() {
+		$('<p class="json botResult"></p>').appendTo('#result_div');
+		$('<div class="json-title">Resultado: </div>').appendTo('.json');
+
+		let json = JSON.parse(jsonObj)
+		for (let x in json) {
+
+			$('<div><b>'+x+'</b>: '+json[x]+'</div>').appendTo('.json');
+		 }
+		scrollToBottomOfResults();
+	}, 1000);
+}
+
+	// Suggestions end -----------------------------------------------------------------------------------------
+
+
 });
+

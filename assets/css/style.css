@@ -401,3 +401,12 @@ mybot .suggestion span:last-child {
   }
 }
 /* MyBot end */
+
+
+.json-title
+{
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 17px;
+}
