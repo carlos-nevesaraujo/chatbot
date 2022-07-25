@@ -4,6 +4,10 @@ $(document).ready(function() {
 	var baseUrl = "https://nbra-pr-nespressobrapi-usw2-app.azurewebsites.net/api";
 	var accessToken = "R-x2ghve7cfpgDSv7m5hD1_rNyKXlfbhaQobX_qnwIFQJWJhEYywj_zcrjb-_ZLczQcNJ9BdEDT13x6A6tgChiRnP8eS01KN10J0WB7oDN-8JqlbLDO-IjGcCocen8OhTlvbhv6oQuqnYtZW9dfyGFwVdjY8lI4kAMAecvO-JQfu-ukG6WFbQuSKggMNjuFyjFmSt0ejNuEs0jmYnu313jFoIsh3KuQylrT5UuZrAmgWWfJZuHyLS7WgVpcyqPzpQXSeZQ55JAAW4lXlkBFoNfKe4z5y_UOYoOpBeZhI6ZtFrJ8Ds0SwSls5Hy2QHgeAzFgk0Qsyi6e0KIpqxQya-MOFC6YxZ89NfEhZvrWn4UM";
 
+
+
+	var c_resposta = 0;
+	var c_nivelresposta = 0;
 	//---------------------------------- Add dynamic html bot content(Widget style) ----------------------------
 	// You can also add the html content in html page and still it will work!
 	var mybot = '<div class="chatCont" id="chatCont">'+
@@ -102,7 +106,7 @@ $(document).ready(function() {
 			} else {
 				$("#chat-input").blur();
 				setUserResponse(text);
-				send(text);
+				send( c_resposta,c_nivelresposta,text);
 				e.preventDefault();
 				return false;
 			}
@@ -111,23 +115,21 @@ $(document).ready(function() {
 
 
 	//------------------------------------------- Send request to API.AI ---------------------------------------
-	function send(text) {
+	function send(resposta, nivelresposta, text) {
 		$.ajax({
 			type: "GET",
 			// url: baseUrl+"query="+text+"&lang=en-us&sessionId="+mysession,
-			url: baseUrl+"/clientes/"+text,
+			url: baseUrl+"/clientes/"+resposta +"/"+nivelresposta +"/"+text,
 			contentType: "application/json",
 			dataType: "json",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
 				"Access-Control-Allow-Methods":"GET",
 				"Access-Control-Allow-Headers":"Authorization",
-
 				"Authorization": "Bearer " + accessToken,
 			},
-			// data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
 			success: function(data) {
-				// main(data);
+				main(data);
 				console.log(data);
 			},
 			error: function(e) {
@@ -139,30 +141,13 @@ $(document).ready(function() {
 
 	//------------------------------------------- Main function ------------------------------------------------
 	function main(data) {
-		var action = data.result.action;
-		var speech = data.result.fulfillment.speech;
-		// use incomplete if u use required in api.ai questions in intent
-		// check if actionIncomplete = false
-		var incomplete = data.result.actionIncomplete;
-		if(data.result.fulfillment.messages) { // check if messages are there
-			if(data.result.fulfillment.messages.length > 0) { //check if quick replies are there
-				var suggestions = data.result.fulfillment.messages[1];
-			}
+	
+		for(i in data.messages)
+		{
+			setBotResponse(data.messages[i]);
 		}
-		switch(action) {
-			// case 'your.action': // set in api.ai
-			// Perform operation/json api call based on action
-			// Also check if (incomplete = false) if there are many required parameters in an intent
-			// if(suggestions) { // check if quick replies are there in api.ai
-			//   addSuggestion(suggestions);
-			// }
-			// break;
-			default:
-				setBotResponse(speech);
-				if(suggestions) { // check if quick replies are there in api.ai
-					addSuggestion(suggestions);
-				}
-				break;
+		if(data.options &&  data.options.length > 0 ) { // check if quick replies are there in api.ai
+			addSuggestion(data.options);
 		}
 	}
 
