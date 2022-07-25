@@ -1,8 +1,5 @@
 $(document).ready(function() {
 
-	// Credentials
-	var baseUrl = "https://nbra-pr-nespressobrapi-usw2-app.azurewebsites.net/api";
-	var accessToken = "R-x2ghve7cfpgDSv7m5hD1_rNyKXlfbhaQobX_qnwIFQJWJhEYywj_zcrjb-_ZLczQcNJ9BdEDT13x6A6tgChiRnP8eS01KN10J0WB7oDN-8JqlbLDO-IjGcCocen8OhTlvbhv6oQuqnYtZW9dfyGFwVdjY8lI4kAMAecvO-JQfu-ukG6WFbQuSKggMNjuFyjFmSt0ejNuEs0jmYnu313jFoIsh3KuQylrT5UuZrAmgWWfJZuHyLS7WgVpcyqPzpQXSeZQ55JAAW4lXlkBFoNfKe4z5y_UOYoOpBeZhI6ZtFrJ8Ds0SwSls5Hy2QHgeAzFgk0Qsyi6e0KIpqxQya-MOFC6YxZ89NfEhZvrWn4UM";
 
 
 
@@ -116,6 +113,16 @@ $(document).ready(function() {
 
 	//------------------------------------------- Send request to API.AI ---------------------------------------
 	function send(resposta, nivelresposta, text) {
+
+		let baseUrl = $("#baseUrl").val();
+		let accessToken = $("#accessToken").val();
+		if(baseUrl == "" || accessToken == "")
+		{
+			setBotResponse("Chaves de API inválidadas !")
+			setBotResponse("Atualize as chaves de api e token")
+
+			return;
+		}
 		$.ajax({
 			type: "GET",
 			// url: baseUrl+"query="+text+"&lang=en-us&sessionId="+mysession,
@@ -131,9 +138,13 @@ $(document).ready(function() {
 			success: function(data) {
 				main(data);
 				console.log(data);
+				
 			},
 			error: function(e) {
 				console.log (e);
+
+				setBotResponse("Chaves de API inválidadas !")
+				setBotResponse("Atualize as chaves de api e token")
 			}
 		});
 	}
