@@ -119,7 +119,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			// url: baseUrl+"query="+text+"&lang=en-us&sessionId="+mysession,
-			url: baseUrl+"/clientes/"+resposta +"/"+nivelresposta +"/"+text,
+			url: baseUrl+"/chatbot/"+resposta +"/"+nivelresposta +"/"+text,
 			contentType: "application/json",
 			dataType: "json",
 			headers: {
