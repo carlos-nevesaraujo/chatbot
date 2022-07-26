@@ -18,7 +18,7 @@
     
 
       <div class="text-center hd1">
-        <img src="assets/img/bot1.svg" alt="bot1">
+        <img src="assets/img/bot.jpeg" alt="bot1" class="img-bot">
         <br>
         Chat Bot do Carlos
         <br>
@@ -30,7 +30,38 @@
       
       </div>
 
-      <mybot></mybot>
+      <mybot>
+        <div class="chatCont" id="chatCont">
+          <div class="bot_profile">
+            <img src="assets/img/chat-bot-2.jpg" class="bot_p_img">
+            <div class="close">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+          </div><!--bot_profile end-->
+          <div id="result_div" class="resultDiv"></div>
+          <div class="chatForm" id="chat-div">
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+            <input type="text" id="chat-input" autocomplete="off" placeholder="Digite aqui ..." class="form-control bot-txt"/>
+          </div>
+        </div><!--chatCont end-->
+
+        <div class="profile_div">
+          <div class="row">
+            <div class="col-hgt">
+              <img src="assets/img/chat-bot-2.jpg" class="img-circle img-profile">
+            </div><!--col-hgt end-->
+            <div class="col-hgt">
+              <div class="chat-txt">
+                Chat do Carlos
+              </div>
+            </div><!--col-hgt end-->
+          </div><!--row end-->
+        </div><!--profile_div end-->
+      </mybot>
 
     </div><!--container end-->
 
@@ -38,5 +69,20 @@
     <!--JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="assets/js/script.js"></script>
+
+
+    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript">
+    </script>
+    <script>
+        (function () {
+            window.onload = function () {
+                new BlipChat()
+                .withAppKey('Y2hhdGRvY2FybG9zOjVhYjQ0MTEyLWZjMGMtNGNmNi1iZWJjLTljOWU1ZmE1MWQ2Zg==')
+                .withButton({"color":"#2CC3D5","icon":""})
+                .withCustomCommonUrl('https://carlos-eduardo-neves-de-araujo-wiq3p.chat.blip.ai/')
+                .build();
+            }
+        })();
+    </script>
   </body>
 </html>

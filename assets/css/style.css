@@ -384,7 +384,9 @@ mybot .suggestion span:last-child {
   height: 100%;
 }
 
-
+.img-bot{
+  width: 260px;
+}
 @media screen and (max-width: 500px) {
   mybot .resultDiv .userEnteredText,
   mybot .resultDiv .botResult,
