@@ -43,7 +43,7 @@ $(document).ready(function() {
 	// ------------------------------------------ Toggle chatbot -----------------------------------------------
 	$('.profile_div').click(function() {
 		$('.profile_div').toggle();
-		$('.chatCont').toggle();
+		$('#chatCont').toggle();
 		$('.bot_profile').toggle();
 		$('.chatForm').toggle();
 		document.getElementById('chat-input').focus();
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 	$('.close').click(function() {
 		$('.profile_div').toggle();
-		$('.chatCont').toggle();
+		$('#chatCont').toggle();
 		$('.bot_profile').toggle();
 		$('.chatForm').toggle();
 	});

@@ -412,3 +412,21 @@ mybot .suggestion span:last-child {
   font-size: 16px;
   margin-bottom: 17px;
 }
+
+.result-div{
+    overflow-y: auto;
+    height: 100%;
+}
+
+
+ .chat-cont {
+  position: fixed;
+  width: 402px;
+  height: 480px !important;
+  bottom: 65px;
+  right: 0;
+  z-index: 10000;
+  display: none;
+  box-shadow: rgb(0 0 0 / 16%) 0px 5px 40px;
+  padding: 0 5px 8px 10px;
+}
