@@ -430,3 +430,9 @@ mybot .suggestion span:last-child {
   box-shadow: rgb(0 0 0 / 16%) 0px 5px 40px;
   padding: 0 5px 8px 10px;
 }
+
+
+.react-film--css-xcrfk-txtskt .react-film__filmstrip .react-film__filmstrip__list
+{
+  display: block!important;
+}
